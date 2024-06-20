@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yemek Önerisi</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="container">
+    <h1>Yemek önerisinde bulunmamı ister misiniz?</h1>
+    <form action="yemek_onerisi.php" method="post">
+        <div id="soru1">
+          <label for="alerji">Alerjiniz var mı?</label><br>
+          <input type="radio" id="evetAlerji" name="alerjisoru" value="evet">
+          <label for="evetAlerji">Evet</label>
+          <input type="radio" id="hayirAlerji" name="alerjisoru" value="hayır">
+          <label for="hayirAlerji">Hayır</label>
+          <button type="button" onclick="handleAlerjiChoice()">Sonraki</button>
+        </div>
+        <div id="soru2" style="display: none;">
+          <label for="alerji">Aşağıdakilerden hangisine alerjiniz var?</label><br>
+          <input type="checkbox" id="süt" name="alerjen" value="süt">
+          <label for="süt">Süt</label>
+          <input type="checkbox" id="gluten" name="alerjen" value="gluten">
+          <label for="gluten">Gluten</label>
+          <input type="checkbox" id="yumurta" name="alerjen" value="yumurta">
+          <label for="yumurta">Yumurta</label>
+          <input type="checkbox" id="hardal" name="alerjen" value="hardal">
+          <label for="hardal">Hardal</label>
+          <input type="checkbox" id="yerfıstığı" name="alerjen" value="yerfıstığı">
+          <label for="yerfıstığı">Yer Fıstığı</label>
+          <input type="checkbox" id="balık" name="alerjen" value="balık">
+          <label for="balık">Balık</label>
+          <button type="button" onclick="nextQuestion('soru3')">Sonraki</button>
+        </div>
+        <div id="soru3" style="display: none;">
+            <label for="doyuruculuk">Yemeğiniz atıştırmalık mı olsun doyurucu mu?</label><br>
+            <input type="radio" id="atistirmalik" name="doyuruculuk" value="atıştırmalık">
+            <label for="atistirmalik">Atıştırmalık</label>
+            <input type="radio" id="doyurucu" name="doyuruculuk" value="doyurucu">
+            <label for="doyurucu">Doyurucu</label>
+            <button type="button" onclick="nextQuestion('soru4')">Sonraki</button>
+        </div>
+        <div id="soru4" style="display: none;">
+            <label for="sure">Hazırlanış Süresi?</label><br>
+            <input type="radio" id="kisa" name="sure" value="kısa">
+            <label for="kisa">Kısa</label>
+            <input type="radio" id="uzun" name="sure" value="uzun">
+            <label for="uzun">Uzun</label>
+            <button type="button" onclick="nextQuestion('soru5')">Sonraki</button>
+        </div>
+        <div id="soru5" style="display: none;">
+            <label for="ogun">Hangi öğün için yemek önerisi istiyorsun?</label><br>
+            <input type="radio" id="sabah" name="ogun" value="sabah">
+            <label for="sabah">Sabah</label>
+            <input type="radio" id="ogle" name="ogun" value="öğle">
+            <label for="ogle">Öğle</label>
+            <input type="radio" id="aksam" name="ogun" value="akşam">
+            <label for="aksam">Akşam</label>
+            <button type="button" onclick="nextQuestion('soru6')">Sonraki</button>
+        </div>
+        <div id="soru6" style="display: none;">
+            <label for="yagOrani">Yemeğinin yağ oranı nasıl olsun?</label><br>
+            <input type="radio" id="azYag" name="yagOrani" value="az">
+            <label for="azYag">Az</label>
+            <input type="radio" id="ortaYag" name="yagOrani" value="orta">
+            <label for="ortaYag">Orta</label>
+            <input type="radio" id="cokYag" name="yagOrani" value="çok">
+            <label for="cokYag">Çok</label>
+            <button type="button" onclick="nextQuestion('soru7')">Sonraki</button>
+        </div>
+        <div id="soru7" style="display: none;">
+            <label for="normal">Beslenme tercihiniz normal mi?(Vegan ya da Vejetaryen olmayan)</label><br>
+            <input type="radio" id="evetNormal" name="normal" value="evet">
+            <label for="evetNormal">Evet</label>
+            <input type="radio" id="hayirNormal" name="normal" value="hayır">
+            <label for="hayirNormal">Hayır</label>
+            <button type="button" onclick="handleNormalChoice()">Sonraki</button>
+        </div>
+        <div id="soru8" style="display: none;">
+            <label for="vegan">Beslenme tercihiniz Vegan mı?</label><br>
+            <input type="radio" id="evetVegan" name="vegan" value="evet">
+            <label for="evetVegan">Evet</label>
+            <input type="radio" id="hayirVegan" name="vegan" value="hayır">
+            <label for="hayirVegan">Hayır</label>
+            <button type="button" onclick="handleVeganChoice()">Sonraki</button>
+        </div>
+        <div id="soru9" style="display: none;">
+            <label for="vejetaryen">Beslenme tercihiniz Vejetaryen mi?</label><br>
+            <input type="radio" id="evetVejetaryen" name="vejeteryan" value="evet">
+            <label for="evetVejetaryen">Evet</label>
+            <input type="radio" id="hayirVejetaryen" name="vejeteryan" value="hayır">
+            <label for="hayirVejetaryen">Hayır</label>
+            <button type="button" onclick="nextQuestion('soru10')">Sonraki</button>
+        </div>
+        <div id="soru10" style="display: none;">
+            <label for="kategori">İstediğiniz yemek kategorisi nedir?</label><br>
+            <input type="radio" id="kahvaltılık" name="kategori" value="kahvaltılık">
+            <label for="kahvaltılık">Kahvaltılık</label>
+            <input type="radio" id="corba" name="kategori" value="çorba">
+            <label for="corba">Çorba</label>
+            <input type="radio" id="salata" name="kategori" value="salata">
+            <label for="salata">Salata</label>
+            <input type="radio" id="anayemek" name="kategori" value="ana yemek">
+            <label for="anayemek">Ana Yemek</label>
+            <input type="radio" id="fastfood" name="kategori" value="fast-food">
+            <label for="fastfood">Fast Food</label>
+            <button type="button" onclick="nextQuestion('soru11')">Sonraki</button>
+        </div>
+        <div id="soru11" style="display: none;">
+            <label for="proteinOrani">Yemeğinizin protein oranı nasıl olsun?</label><br>
+            <input type="radio" id="azProtein" name="proteinOrani" value="az">
+            <label for="azProtein">Az</label>
+            <input type="radio" id="ortaProtein" name="proteinOrani" value="orta">
+            <label for="ortaProtein">Orta</label>
+            <input type="radio" id="cokProtein" name="proteinOrani" value="çok">
+            <label for="cokProtein">Çok</label>
+            <button type="button" onclick="nextQuestion('soru12')">Sonraki</button>
+        </div>
+        <div id="soru12" style="display: none;">
+            <label for="lezzetProfili">Yemeğinizin lezzet profili nasıl olsun?</label><br>
+            <input type="radio" id="tatli" name="lezzetProfili" value="tatlı">
+            <label for="tatli">Tatlı</label>
+            <input type="radio" id="tuzlu" name="lezzetProfili" value="tuzlu">
+            <label for="tuzlu">Tuzlu</label>
+            <button type="button" onclick="nextQuestion('soru13')">Sonraki</button>
+        </div>
+        <div id="soru13" style="display: none;">
+            <label for="diyet">Hangisi diyet programınıza daha uygun?</label><br>
+            <input type="radio" id="azKalorili" name="diyet" value="az kalorili">
+            <label for="azKalorili">Az Kalorili</label>
+            <input type="radio" id="cokKalorili" name="diyet" value="çok kalorili">
+            <label for="cokKalorili">Çok Kalorili</label>
+            <button type="submit">Yemek Önerisi Al</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+  function nextQuestion(questionId) {
+    document.getElementById("soru1").style.display = "none";
+    document.getElementById("soru2").style.display = "none";
+    document.getElementById("soru3").style.display = "none";
+    document.getElementById("soru4").style.display = "none";
+    document.getElementById("soru5").style.display = "none";
+    document.getElementById("soru6").style.display = "none";
+    document.getElementById("soru7").style.display = "none";
+    document.getElementById("soru8").style.display = "none";
+    document.getElementById("soru9").style.display = "none";
+    document.getElementById("soru10").style.display = "none";
+    document.getElementById("soru11").style.display = "none";
+    document.getElementById("soru12").style.display = "none";
+    document.getElementById("soru13").style.display = "none";
+
+    document.getElementById(questionId).style.display = "block";
+  }
+
+  function handleNormalChoice() {
+    var normalChoice = document.querySelector('input[name="normal"]:checked').value;
+    if (normalChoice === "evet")
+    {
+      nextQuestion('soru10');
+    }
+    else
+    {
+      nextQuestion('soru8');
+    }
+  }
+
+  function handleVeganChoice() {
+    var veganChoice = document.querySelector('input[name="vegan"]:checked').value;
+    if(veganChoice === "evet")
+    {
+      nextQuestion('soru10');
+    }
+    else
+    {
+      nextQuestion('soru9');
+    }
+  }
+
+  function handleAlerjiChoice() {
+    var alerjiChoice = document.querySelector('input[name="alerjisoru"]:checked').value;
+    if(alerjiChoice === "evet")
+    {
+      nextQuestion('soru2');
+    }
+    else
+    {
+      nextQuestion('soru3');
+    }
+  }
+</script>
+</body>
+</html>
